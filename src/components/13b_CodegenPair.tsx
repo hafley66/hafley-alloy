@@ -3,7 +3,7 @@ import {
   createContext,
   useContext,
 } from "@alloy-js/core";
-import { SourceFile } from "./5_SourceFile.js";
+import { SourceFile } from "./05_SourceFile.js";
 
 // Generic auto/manual file pairing for code generation.
 // The auto file (_auto.rs) is regenerated every time -- protocol boilerplate.

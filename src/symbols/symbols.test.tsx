@@ -8,12 +8,12 @@ import {
   render,
 } from "@alloy-js/core";
 import { describe, expect, it } from "vitest";
-import { RustSymbol } from "./0_rust.js";
-import { RustNamedTypeSymbol } from "./1_named-type.js";
-import { RustFunctionSymbol } from "./2_function.js";
-import { RustLexicalScope } from "../scopes/1_lexical.js";
-import { RustNamedTypeScope } from "../scopes/3_named-type.js";
-import { createTypeSymbol, createFieldSymbol, createFunctionSymbol } from "./3_factories.js";
+import { RustSymbol } from "./00_rust.js";
+import { RustNamedTypeSymbol } from "./01_named-type.js";
+import { RustFunctionSymbol } from "./02_function.js";
+import { RustLexicalScope } from "../scopes/01_lexical.js";
+import { RustNamedTypeScope } from "../scopes/03_named-type.js";
+import { createTypeSymbol, createFieldSymbol, createFunctionSymbol } from "./03_factories.js";
 
 // Minimal wrapper that provides a RustLexicalScope for symbol creation
 function RustRoot(props: { children: any }) {

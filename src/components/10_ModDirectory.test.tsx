@@ -1,11 +1,11 @@
 import { List, Output, render, refkey } from "@alloy-js/core";
 import { describe, expect, it } from "vitest";
-import { CrateDirectory } from "./8_CrateDirectory.js";
-import { SourceFile } from "./5_SourceFile.js";
+import { CrateDirectory } from "./08_CrateDirectory.js";
+import { SourceFile } from "./05_SourceFile.js";
 import { ModDirectory } from "./10_ModDirectory.js";
-import { StructDeclaration, StructField } from "./1_StructDeclaration.js";
-import { FunctionDeclaration } from "./3_FunctionDeclaration.js";
-import { EnumDeclaration, UnitVariant } from "./2_EnumDeclaration.js";
+import { StructDeclaration, StructField } from "./01_StructDeclaration.js";
+import { FunctionDeclaration } from "./03_FunctionDeclaration.js";
+import { EnumDeclaration, UnitVariant } from "./02_EnumDeclaration.js";
 
 function findFile(res: any, path: string): any {
   for (const item of res.contents) {

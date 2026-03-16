@@ -4,9 +4,9 @@ import {
   Scope,
   SourceDirectory,
 } from "@alloy-js/core";
-import { RustModuleScope } from "../scopes/1a_module.js";
-import { useRustScope } from "../scopes/5_contexts.js";
-import { SourceFile } from "./5_SourceFile.js";
+import { RustModuleScope } from "../scopes/01a_module.js";
+import { useRustScope } from "../scopes/05_contexts.js";
+import { SourceFile } from "./05_SourceFile.js";
 
 export interface ModDirectoryProps {
   name: string;

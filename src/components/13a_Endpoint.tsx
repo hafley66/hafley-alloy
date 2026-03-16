@@ -1,6 +1,6 @@
 import { Children, List } from "@alloy-js/core";
-import { FunctionDeclaration, type FunctionParam } from "./3_FunctionDeclaration.js";
-import { Reference } from "./6_Reference.js";
+import { FunctionDeclaration, type FunctionParam } from "./03_FunctionDeclaration.js";
+import { Reference } from "./06_Reference.js";
 import { AppendTo } from "./13_AppendZone.js";
 import { CodegenPair, AutoFile, StubFile, ImplCall } from "./13b_CodegenPair.js";
 import type { Refkey } from "@alloy-js/core";

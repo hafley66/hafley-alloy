@@ -8,15 +8,15 @@ import { describe, expect, it } from "vitest";
 import { execSync } from "node:child_process";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
-import { VisibilityContext } from "../scopes/5_contexts.js";
-import { StructDeclaration, StructField } from "./1_StructDeclaration.js";
-import { SourceFile } from "./5_SourceFile.js";
-import { Reference } from "./6_Reference.js";
-import { CrateDirectory } from "./8_CrateDirectory.js";
+import { VisibilityContext } from "../scopes/05_contexts.js";
+import { StructDeclaration, StructField } from "./01_StructDeclaration.js";
+import { SourceFile } from "./05_SourceFile.js";
+import { Reference } from "./06_Reference.js";
+import { CrateDirectory } from "./08_CrateDirectory.js";
 import { ModDirectory } from "./10_ModDirectory.js";
 import { ZoneProvider, Zone } from "./13_AppendZone.js";
 import { Endpoint } from "./13a_Endpoint.js";
-import { FunctionDeclaration } from "./3_FunctionDeclaration.js";
+import { FunctionDeclaration } from "./03_FunctionDeclaration.js";
 
 const OUTPUT_DIR = join(import.meta.dirname, "../../test-output-endpoint");
 

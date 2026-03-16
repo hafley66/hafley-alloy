@@ -1,9 +1,9 @@
 import { Output, Scope, createScope, render } from "@alloy-js/core";
 import { describe, expect, it } from "vitest";
-import { RustLexicalScope } from "../scopes/1_lexical.js";
-import { FunctionDeclaration } from "./3_FunctionDeclaration.js";
-import { CrateDirectory } from "./8_CrateDirectory.js";
-import { SourceFile } from "./5_SourceFile.js";
+import { RustLexicalScope } from "../scopes/01_lexical.js";
+import { FunctionDeclaration } from "./03_FunctionDeclaration.js";
+import { CrateDirectory } from "./08_CrateDirectory.js";
+import { SourceFile } from "./05_SourceFile.js";
 import { CodegenPair, AutoFile, StubFile, ImplCall } from "./13b_CodegenPair.js";
 
 function RustRoot(props: { children: any }) {

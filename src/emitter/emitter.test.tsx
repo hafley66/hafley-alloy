@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { execSync } from "node:child_process";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
-import { emitCrate } from "./3_emit-crate.js";
-import type { TypeDef } from "./0_types.js";
+import { emitCrate } from "./03_emit-crate.js";
+import type { TypeDef } from "./00_types.js";
 
 const OUTPUT_DIR = join(import.meta.dirname, "../../test-output-emitter");
 
