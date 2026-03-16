@@ -34,12 +34,11 @@ export function emitModel(model: ModelDef, registry: RefkeyRegistry, rk?: Refkey
       <StructDeclaration
         name={model.name}
         refkey={key}
-        pub
         derive={MODEL_DERIVES}
       >
         <List hardline>
           {fields.map(f => (
-            <StructField name={f.name} type={f.typeCode} pub />
+            <StructField name={f.name} type={f.typeCode} />
           ))}
         </List>
       </StructDeclaration>
@@ -60,7 +59,6 @@ export function emitEnum(def: EnumDef, registry: RefkeyRegistry, rk?: Refkey): E
       <EnumDeclaration
         name={def.name}
         refkey={key}
-        pub
         derive={ENUM_DERIVES}
       >
         <List hardline>

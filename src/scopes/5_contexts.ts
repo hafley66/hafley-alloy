@@ -1,9 +1,26 @@
-import { useScope } from "@alloy-js/core";
+import { createContext, useContext, useScope } from "@alloy-js/core";
 import { RustScope } from "./0_rust.js";
 import { RustLexicalScope } from "./1_lexical.js";
 import { RustModuleScope } from "./1a_module.js";
 import { RustNamedTypeScope } from "./3_named-type.js";
 import { RustFunctionScope } from "./4_function.js";
+
+// Visibility context: when provided, declarations default to this visibility.
+// undefined = no default visibility (private). "pub" = all declarations are pub unless explicitly opted out.
+export const VisibilityContext = createContext<string | undefined>(undefined, "VisibilityContext");
+
+/**
+ * Resolve visibility for a declaration.
+ * - pub={true} -> "pub "
+ * - pub={false} -> "" (explicit opt-out, even inside a pub context)
+ * - pub={undefined} -> defer to VisibilityContext
+ */
+export function useVisibility(pubProp: boolean | undefined): string {
+  const contextVis = useContext(VisibilityContext);
+  if (pubProp === true) return "pub ";
+  if (pubProp === false) return "";
+  return contextVis ? contextVis + " " : "";
+}
 
 export function useRustScope(): RustScope {
   const scope = useScope();

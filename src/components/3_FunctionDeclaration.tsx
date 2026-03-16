@@ -1,5 +1,6 @@
 import { Block, Children, Declaration, For, Name, Namekey, Refkey, Scope } from "@alloy-js/core";
 import { createFunctionScope } from "../scopes/6_factories.js";
+import { useVisibility } from "../scopes/5_contexts.js";
 import { createFunctionSymbol, createParameterSymbol } from "../symbols/3_factories.js";
 import { Generics, GenericsProps, WhereClause, WhereClauseProps } from "./0_Generics.js";
 import { Attributes } from "./0a_Attributes.js";
@@ -29,7 +30,7 @@ export function FunctionDeclaration(props: FunctionDeclarationProps) {
   const attrsBlock = props.attrs && props.attrs.length > 0
     ? <><Attributes attrs={props.attrs} />{"\n"}</>
     : null;
-  const vis = props.pub ? "pub " : "";
+  const vis = useVisibility(props.pub);
   const asyncKw = props.async ? "async " : "";
 
   const selfStr = props.selfParam === "&" ? "&self"

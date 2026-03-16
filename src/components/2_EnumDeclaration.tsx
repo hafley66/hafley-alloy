@@ -1,8 +1,10 @@
 import { Block, Children, Declaration, For, Name, Namekey, Refkey, Scope } from "@alloy-js/core";
 import { createNamedTypeScope } from "../scopes/6_factories.js";
+import { useVisibility } from "../scopes/5_contexts.js";
 import { createTypeSymbol } from "../symbols/3_factories.js";
 import { Generics, GenericsProps } from "./0_Generics.js";
 import { Attributes } from "./0a_Attributes.js";
+import { serdeContainerAttr, type SerdeContainerConfig } from "./0b_Serde.js";
 
 export interface UnitVariantProps {
   name: string;
@@ -35,6 +37,7 @@ export interface EnumDeclarationProps extends GenericsProps {
   pub?: boolean;
   attrs?: string[];
   derive?: string[];
+  serde?: SerdeContainerConfig;
   children: Children;
   refkey?: Refkey;
 }
@@ -43,15 +46,16 @@ export function EnumDeclaration(props: EnumDeclarationProps) {
   const sym = createTypeSymbol(props.name, "enum", { refkeys: props.refkey });
   const scope = createNamedTypeScope(sym);
 
+  const vis = useVisibility(props.pub);
+
   const allAttrs = [
     ...(props.derive && props.derive.length > 0 ? [`derive(${props.derive.join(", ")})`] : []),
+    ...(props.serde ? [serdeContainerAttr(props.serde)] : []),
     ...(props.attrs ?? []),
-  ];
+  ].filter(Boolean) as string[];
   const attrsBlock = allAttrs.length > 0
     ? <><Attributes attrs={allAttrs} />{"\n"}</>
     : null;
-
-  const vis = props.pub ? "pub " : "";
 
   return (
     <Declaration symbol={sym}>

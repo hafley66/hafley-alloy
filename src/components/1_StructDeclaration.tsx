@@ -1,25 +1,33 @@
 import { Block, Children, Declaration, For, Name, Namekey, Refkey, Scope } from "@alloy-js/core";
 import { createNamedTypeScope } from "../scopes/6_factories.js";
+import { useVisibility } from "../scopes/5_contexts.js";
 import { createTypeSymbol, createFieldSymbol } from "../symbols/3_factories.js";
 import { Generics, GenericsProps, WhereClause, WhereClauseProps } from "./0_Generics.js";
 import { Attributes } from "./0a_Attributes.js";
+import { serdeContainerAttr, serdeFieldAttr, type SerdeContainerConfig, type SerdeFieldConfig } from "./0b_Serde.js";
 
 export interface StructFieldProps {
   name: string | Namekey;
   type: Children;
   pub?: boolean;
   attrs?: string[];
+  serde?: SerdeFieldConfig;
   refkey?: Refkey;
 }
 
 export function StructField(props: StructFieldProps) {
   const sym = createFieldSymbol(props.name, { refkeys: props.refkey });
-  const fieldAttrs = props.attrs && props.attrs.length > 0
-    ? <><Attributes attrs={props.attrs} />{"\n"}</>
+  const vis = useVisibility(props.pub);
+  const allAttrs = [
+    ...(props.serde ? [serdeFieldAttr(props.serde)] : []),
+    ...(props.attrs ?? []),
+  ].filter(Boolean) as string[];
+  const fieldAttrs = allAttrs.length > 0
+    ? <><Attributes attrs={allAttrs} />{"\n"}</>
     : null;
   return (
     <Declaration symbol={sym}>
-      {fieldAttrs}{props.pub ? "pub " : ""}<Name />: {props.type},
+      {fieldAttrs}{vis}<Name />: {props.type},
     </Declaration>
   );
 }
@@ -29,6 +37,7 @@ export interface StructDeclarationProps extends GenericsProps {
   pub?: boolean;
   attrs?: string[];
   derive?: string[];
+  serde?: SerdeContainerConfig;
   where?: WhereClause[];
   children?: Children;
   refkey?: Refkey;
@@ -40,15 +49,16 @@ export function StructDeclaration(props: StructDeclarationProps) {
   const sym = createTypeSymbol(props.name, "struct", { refkeys: props.refkey });
   const scope = createNamedTypeScope(sym);
 
+  const vis = useVisibility(props.pub);
+
   const allAttrs = [
     ...(props.derive && props.derive.length > 0 ? [`derive(${props.derive.join(", ")})`] : []),
+    ...(props.serde ? [serdeContainerAttr(props.serde)] : []),
     ...(props.attrs ?? []),
-  ];
+  ].filter(Boolean) as string[];
   const attrsBlock = allAttrs.length > 0
     ? <><Attributes attrs={allAttrs} />{"\n"}</>
     : null;
-
-  const vis = props.pub ? "pub " : "";
 
   const whereClause = props.where && props.where.length > 0
     ? <WhereClause clauses={props.where} />
@@ -91,22 +101,23 @@ export interface TupleStructDeclarationProps extends GenericsProps {
   pub?: boolean;
   attrs?: string[];
   derive?: string[];
+  serde?: SerdeContainerConfig;
   fields: Children[];
   refkey?: Refkey;
 }
 
 export function TupleStructDeclaration(props: TupleStructDeclarationProps) {
   const sym = createTypeSymbol(props.name, "struct", { refkeys: props.refkey });
+  const vis = useVisibility(props.pub);
 
   const allAttrs = [
     ...(props.derive && props.derive.length > 0 ? [`derive(${props.derive.join(", ")})`] : []),
+    ...(props.serde ? [serdeContainerAttr(props.serde)] : []),
     ...(props.attrs ?? []),
-  ];
+  ].filter(Boolean) as string[];
   const attrsBlock = allAttrs.length > 0
     ? <><Attributes attrs={allAttrs} />{"\n"}</>
     : null;
-
-  const vis = props.pub ? "pub " : "";
 
   return (
     <Declaration symbol={sym}>
