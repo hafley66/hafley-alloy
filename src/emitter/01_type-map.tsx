@@ -29,8 +29,16 @@ const SCALAR_MAP: Record<string, RustType> = {
   utcDateTime: { code: "DateTime<Utc>", externalUses: ["chrono::DateTime", "chrono::Utc"] },
   plainDate:   { code: "NaiveDate", externalUses: ["chrono::NaiveDate"] },
   plainTime:   { code: "NaiveTime", externalUses: ["chrono::NaiveTime"] },
-  duration:    { code: "Duration", externalUses: ["std::time::Duration"] },
-  url:         { code: "String", externalUses: [] },
+  duration:       { code: "Duration", externalUses: ["std::time::Duration"] },
+  url:            { code: "String", externalUses: [] },
+  uuid:           { code: "Uuid", externalUses: ["uuid::Uuid"] },
+  decimal:        { code: "Decimal", externalUses: ["rust_decimal::Decimal"] },
+  decimal128:     { code: "Decimal", externalUses: ["rust_decimal::Decimal"] },
+  integer:        { code: "i64", externalUses: [] },
+  float:          { code: "f64", externalUses: [] },
+  numeric:        { code: "f64", externalUses: [] },
+  safeint:        { code: "i64", externalUses: [] },
+  offsetDateTime: { code: "DateTime<FixedOffset>", externalUses: ["chrono::DateTime", "chrono::FixedOffset"] },
 };
 
 export function mapType(type: ModelProperty["type"], registry: RefkeyRegistry): RustType {

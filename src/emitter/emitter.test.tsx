@@ -138,6 +138,45 @@ describe("emitter", () => {
     `);
   });
 
+  it("emits uuid, decimal, offsetDateTime, safeint scalars", () => {
+    const ENTITY: TypeDef = {
+      kind: "model",
+      name: "Entity",
+      properties: [
+        { name: "id", type: { kind: "scalar", name: "uuid" } },
+        { name: "price", type: { kind: "scalar", name: "decimal" } },
+        { name: "big_price", type: { kind: "scalar", name: "decimal128" } },
+        { name: "count", type: { kind: "scalar", name: "integer" } },
+        { name: "rating", type: { kind: "scalar", name: "float" } },
+        { name: "score", type: { kind: "scalar", name: "numeric" } },
+        { name: "js_id", type: { kind: "scalar", name: "safeint" } },
+        { name: "modified_at", type: { kind: "scalar", name: "offsetDateTime" } },
+      ],
+    };
+    const res = emitCrate([ENTITY]);
+    const file = findFile(res, "models/entity.rs");
+    expect(file.contents.trim()).toMatchInlineSnapshot(`
+      "use chrono::DateTime;
+      use chrono::FixedOffset;
+      use rust_decimal::Decimal;
+      use serde::Deserialize;
+      use serde::Serialize;
+      use uuid::Uuid;
+
+      #[derive(Debug, Clone, Serialize, Deserialize)]
+      pub struct Entity {
+        pub id: Uuid,
+        pub price: Decimal,
+        pub big_price: Decimal,
+        pub count: i64,
+        pub rating: f64,
+        pub score: f64,
+        pub js_id: i64,
+        pub modified_at: DateTime<FixedOffset>,
+      }"
+    `);
+  });
+
   it("cross-model reference generates use crate::", () => {
     const POST_WITH_AUTHOR: TypeDef = {
       kind: "model",
